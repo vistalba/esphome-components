@@ -272,8 +272,6 @@ enum PrintProperty {
   Unknown = 1024
 };
 
-// Alias for backward compatibility - avoids breaking existing code
-constexpr PrintProperty STATUS = PrintProperty::PP_STATUS;
 
 int toBit(PrintProperty p);
 const char *toString(PrintProperty p);
