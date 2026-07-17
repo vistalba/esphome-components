@@ -151,7 +151,7 @@ struct MeterInfo {
 //
 // Dynamic loading of drivers based on the driver info.
 //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct DriverDetect {
   uint16_t mfct;
@@ -237,7 +237,7 @@ std::string loadDriver(const std::string &file, const char *content);
 
 std::vector<DriverInfo *> &allDrivers();
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 enum class VifScaling {
   Auto, // Scale to normalized VIF unit (ie kwh, m3, m3h etc)
@@ -262,8 +262,8 @@ enum PrintProperty {
                 // or null.
   DEPRECATED = 2, // This field is about to be removed or changed in a newer
                   // driver, which will have a new name.
-  STATUS = 4, // This is >the< status field and it should read OK of not error
-              // flags are set.
+  PP_STATUS = 4, // This is >the< status field and it should read OK of not error
+                 // flags are set.
   INCLUDE_TPL_STATUS = 8,  // This text field also includes the tpl status
                            // decoding. multiple OK:s collapse to a single OK.
   INJECT_INTO_STATUS = 16, // This text field is injected into the already
@@ -271,6 +271,9 @@ enum PrintProperty {
   HIDE = 32, // This field is only used in calculations, do not print it!
   Unknown = 1024
 };
+
+// Alias for backward compatibility - avoids breaking existing code
+constexpr PrintProperty STATUS = PrintProperty::PP_STATUS;
 
 int toBit(PrintProperty p);
 const char *toString(PrintProperty p);
@@ -281,7 +284,7 @@ struct PrintProperties {
 
   bool hasREQUIRED() { return props_ & PrintProperty::REQUIRED; }
   bool hasDEPRECATED() { return props_ & PrintProperty::DEPRECATED; }
-  bool hasSTATUS() { return props_ & PrintProperty::STATUS; }
+  bool hasPPSTATUS() { return props_ & PrintProperty::PP_STATUS; }
   bool hasINCLUDETPLSTATUS() {
     return props_ & PrintProperty::INCLUDE_TPL_STATUS;
   }
